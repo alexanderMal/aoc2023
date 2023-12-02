@@ -1,0 +1,128 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxl0hlk276n3m"]
+
+[ext_resource type="Texture2D" uid="uid://ccivgxwsvv1sk" path="res://assets/RTS_Crate.png" id="1_7ll2l"]
+[ext_resource type="Script" path="res://scenes/util/char_box.gd" id="1_5586t"]
+
+[sub_resource type="Animation" id="Animation_7qj1b"]
+resource_name = "show_content"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BoxCover:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.2, 0.2), Vector2(0.2, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BoxCover:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.219608, 0.219608, 0.219608, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_orkpl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BoxCover:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.2, 0.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BoxCover:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_yxynb"]
+resource_name = "fly_in"
+length = 0.55
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.51),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fix_pos"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ogm3o"]
+_data = {
+"RESET": SubResource("Animation_orkpl"),
+"fly_in": SubResource("Animation_yxynb"),
+"show_content": SubResource("Animation_7qj1b")
+}
+
+[node name="CharBox" type="Node2D"]
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_5586t")
+
+[node name="BoxBackground" type="Sprite2D" parent="."]
+self_modulate = Color(0.376471, 0.376471, 0.376471, 1)
+texture_filter = 1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_7ll2l")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 80
+text = "H"
+
+[node name="BoxCover" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 51)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_7ll2l")
+offset = Vector2(0, -259)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ogm3o")
+}

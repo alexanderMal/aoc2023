@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1ij2u388ydpr"]
+
+[ext_resource type="Script" path="res://scenes/aoc2/Aoc2.gd" id="1_4fkm2"]
+[ext_resource type="PackedScene" uid="uid://bpjj620kmhfsw" path="res://scenes/util/file_reader.tscn" id="2_2sfm4"]
+[ext_resource type="Script" path="res://scenes/aoc2/Calculation.gd" id="3_ah5xg"]
+[ext_resource type="Script" path="res://scenes/aoc2/InputFormatter.gd" id="4_vnqfm"]
+
+[node name="Aoc2" type="Node2D"]
+script = ExtResource("1_4fkm2")
+
+[node name="Aoc2FileReader" parent="." instance=ExtResource("2_2sfm4")]
+file_path = "res://scenes/aoc2/input.txt"
+
+[node name="State" type="Node" parent="."]
+
+[node name="Calculation" type="Node" parent="State"]
+script = ExtResource("3_ah5xg")
+
+[node name="InputFormatterAoc2" type="Node" parent="State" node_paths=PackedStringArray("file_reader")]
+script = ExtResource("4_vnqfm")
+file_reader = NodePath("../../Aoc2FileReader")

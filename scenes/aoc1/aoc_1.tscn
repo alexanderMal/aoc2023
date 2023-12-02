@@ -1,0 +1,227 @@
+[gd_scene load_steps=16 format=3 uid="uid://btykxdi7vm30"]
+
+[ext_resource type="Script" path="res://scenes/aoc1/aoc_1.gd" id="1_57akg"]
+[ext_resource type="Texture2D" uid="uid://7plhv23llj1" path="res://assets/PNG/BG_02/Layers/Sky.png" id="1_n0n6t"]
+[ext_resource type="Script" path="res://scenes/aoc1/Camera2D.gd" id="1_ypr7k"]
+[ext_resource type="Texture2D" uid="uid://dkhs48p1s15tb" path="res://assets/PNG/BG_02/Layers/BG.png" id="2_g1vcr"]
+[ext_resource type="Texture2D" uid="uid://bgxvu1u2pcmiv" path="res://assets/vecteezy_snowflake_small.png" id="2_wpwse"]
+[ext_resource type="Texture2D" uid="uid://belt2wast8s62" path="res://assets/PNG/BG_02/Layers/Middle.png" id="3_1lhad"]
+[ext_resource type="Texture2D" uid="uid://8dugr0voo81a" path="res://assets/PNG/BG_02/Layers/Foreground.png" id="4_qkvr8"]
+[ext_resource type="Texture2D" uid="uid://dlyd3hsg3a8or" path="res://assets/PNG/BG_02/Layers/Ground_01.png" id="5_1pyox"]
+[ext_resource type="PackedScene" uid="uid://bwtsah44poq01" path="res://scenes/util/minion.tscn" id="8_jajod"]
+[ext_resource type="PackedScene" uid="uid://bpjj620kmhfsw" path="res://scenes/util/file_reader.tscn" id="10_7l68h"]
+[ext_resource type="PackedScene" uid="uid://b0yt4nm08cf0m" path="res://scenes/util/box_spawner.tscn" id="12_rdmer"]
+
+[sub_resource type="Gradient" id="Gradient_eophn"]
+offsets = PackedFloat32Array(0.929412, 1)
+colors = PackedColorArray(0.978824, 0.978824, 0.978824, 1, 0.992157, 0.992157, 0.992157, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xni3i"]
+
+[sub_resource type="Animation" id="Animation_vkvpo"]
+resource_name = "flow"
+length = 50.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("minion")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(6, 16, 22.1, 25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": ["Let it snow, let it snow, let it snow!"],
+"method": &"say"
+}, {
+"args": ["Whats that!?"],
+"method": &"say"
+}, {
+"args": ["A Box?!"],
+"method": &"say"
+}, {
+"args": ["Open up Box ..."],
+"method": &"say"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("minion:speed")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(17),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [100]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ncrpf"]
+_data = {
+"flow": SubResource("Animation_vkvpo")
+}
+
+[node name="AOC1" type="Node2D"]
+script = ExtResource("1_57akg")
+
+[node name="FileReader" parent="." instance=ExtResource("10_7l68h")]
+file_path = "res://scenes/aoc1/aoc1.txt"
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.05, 0)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Sky"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_n0n6t")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Background"]
+offset_top = -62.0
+offset_right = 1920.0
+offset_bottom = 1018.0
+texture = ExtResource("2_g1vcr")
+metadata/_edit_use_anchors_ = true
+
+[node name="Middle" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Middle"]
+offset_top = -63.0
+offset_right = 1920.0
+offset_bottom = 1017.0
+texture = ExtResource("3_1lhad")
+metadata/_edit_use_anchors_ = true
+
+[node name="Buildings" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 0.8)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Buildings"]
+offset_left = -2.0
+offset_top = 125.0
+offset_right = 1918.0
+offset_bottom = 1205.0
+texture = ExtResource("4_qkvr8")
+metadata/_edit_use_anchors_ = true
+
+[node name="minion" parent="." instance=ExtResource("8_jajod")]
+z_index = 1
+position = Vector2(148, 1071)
+speech_time = 3.0
+speed = 50
+
+[node name="Camera2D" type="Camera2D" parent="minion"]
+position = Vector2(-2, -179)
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("1_ypr7k")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="minion/Camera2D"]
+position = Vector2(607, -622)
+amount = 900
+lifetime = 7.5
+randomness = 0.43
+texture = ExtResource("2_wpwse")
+emission_shape = 3
+emission_rect_extents = Vector2(1500, 1)
+spread = 164.6
+gravity = Vector2(0, 30)
+angular_velocity_min = -201.36
+angular_velocity_max = 231.21
+linear_accel_min = -13.56
+linear_accel_max = 10.0
+scale_amount_min = 0.05
+scale_amount_max = 0.2
+color = Color(100, 100, 100, 1)
+color_ramp = SubResource("Gradient_eophn")
+
+[node name="ZoomOutTimer" type="Timer" parent="minion/Camera2D"]
+wait_time = 2.0
+one_shot = true
+
+[node name="RoleChangeTimer" type="Timer" parent="minion/Camera2D"]
+wait_time = 3.0
+one_shot = true
+
+[node name="PanelContainer" type="VBoxContainer" parent="minion/Camera2D"]
+visible = false
+offset_left = 3.0
+offset_top = -242.0
+offset_right = 4.0
+offset_bottom = -219.0
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="minion/Camera2D/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_xni3i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="minion/Camera2D/PanelContainer/Label"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = -10
+theme_override_constants/margin_top = -10
+theme_override_constants/margin_right = -10
+theme_override_constants/margin_bottom = -10
+
+[node name="PanelContainer" type="PanelContainer" parent="minion/Camera2D/PanelContainer/Label/MarginContainer"]
+layout_mode = 2
+
+[node name="BoxSpawner" parent="." node_paths=PackedStringArray("file_reader") instance=ExtResource("12_rdmer")]
+position = Vector2(2000, 1087)
+file_reader = NodePath("../FileReader")
+distance_between_boxes = 35
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ncrpf")
+}
+autoplay = "flow"
+
+[node name="ResetTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Foreground" type="ParallaxBackground" parent="."]
+layer = 5
+
+[node name="Ground" type="ParallaxLayer" parent="Foreground"]
+motion_scale = Vector2(1.2, 1.2)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Foreground/Ground"]
+offset_top = 367.0
+offset_right = 1920.0
+offset_bottom = 1447.0
+texture = ExtResource("5_1pyox")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="role_change" from="minion" to="minion/Camera2D" method="_on_minion_role_change"]
+[connection signal="timeout" from="minion/Camera2D/ZoomOutTimer" to="minion/Camera2D" method="_on_zoom_out_timer_timeout"]
+[connection signal="timeout" from="minion/Camera2D/RoleChangeTimer" to="minion/Camera2D" method="_on_role_change_timer_timeout"]
+[connection signal="back_no_number" from="BoxSpawner" to="minion" method="_on_box_spawner_back_no_number"]
+[connection signal="back_number_found" from="BoxSpawner" to="." method="_on_box_spawner_back_number_found"]
+[connection signal="back_number_found" from="BoxSpawner" to="minion" method="_on_box_spawner_back_number_found"]
+[connection signal="box_found" from="BoxSpawner" to="minion" method="_on_box_spawner_box_found"]
+[connection signal="elfie_created" from="BoxSpawner" to="minion/Camera2D" method="_on_box_spawner_elfie_created"]
+[connection signal="front_no_number" from="BoxSpawner" to="minion" method="_on_box_spawner_front_no_number"]
+[connection signal="front_number_found" from="BoxSpawner" to="minion" method="_on_box_spawner_front_number_found"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]

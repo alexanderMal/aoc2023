@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpjj620kmhfsw"]
+
+[ext_resource type="Script" path="res://scenes/aoc1/FileReader.gd" id="1_hxma6"]
+
+[node name="FileReader" type="Node"]
+script = ExtResource("1_hxma6")

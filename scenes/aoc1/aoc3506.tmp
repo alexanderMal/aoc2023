@@ -1,0 +1,178 @@
+[gd_scene load_steps=14 format=3 uid="uid://btykxdi7vm30"]
+
+[ext_resource type="Texture2D" uid="uid://7plhv23llj1" path="res://assets/PNG/BG_02/Layers/Sky.png" id="1_n0n6t"]
+[ext_resource type="Script" path="res://scenes/aoc1/Camera2D.gd" id="1_ypr7k"]
+[ext_resource type="Texture2D" uid="uid://dkhs48p1s15tb" path="res://assets/PNG/BG_02/Layers/BG.png" id="2_g1vcr"]
+[ext_resource type="Texture2D" uid="uid://bgxvu1u2pcmiv" path="res://assets/vecteezy_snowflake_small.png" id="2_wpwse"]
+[ext_resource type="Texture2D" uid="uid://belt2wast8s62" path="res://assets/PNG/BG_02/Layers/Middle.png" id="3_1lhad"]
+[ext_resource type="Texture2D" uid="uid://8dugr0voo81a" path="res://assets/PNG/BG_02/Layers/Foreground.png" id="4_qkvr8"]
+[ext_resource type="Texture2D" uid="uid://dlyd3hsg3a8or" path="res://assets/PNG/BG_02/Layers/Ground_01.png" id="5_1pyox"]
+[ext_resource type="PackedScene" uid="uid://bwtsah44poq01" path="res://scenes/util/minion.tscn" id="8_jajod"]
+[ext_resource type="PackedScene" uid="uid://bpjj620kmhfsw" path="res://scenes/util/file_reader.tscn" id="10_7l68h"]
+[ext_resource type="PackedScene" uid="uid://b0yt4nm08cf0m" path="res://scenes/util/box_spawner.tscn" id="12_rdmer"]
+
+[sub_resource type="Gradient" id="Gradient_eophn"]
+offsets = PackedFloat32Array(0.929412, 1)
+colors = PackedColorArray(0.978824, 0.978824, 0.978824, 1, 0.992157, 0.992157, 0.992157, 0)
+
+[sub_resource type="Animation" id="Animation_vkvpo"]
+resource_name = "flow"
+length = 30.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("minion")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(6, 16, 22.1, 29),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": ["Let it snow, let it snow, let it snow!"],
+"method": &"say"
+}, {
+"args": ["Whats that!?"],
+"method": &"say"
+}, {
+"args": ["A Box?!"],
+"method": &"say"
+}, {
+"args": ["Open up Box ..."],
+"method": &"say"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("minion:speed")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(18),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [100]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BoxSpawner")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(30.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"open_box_from_front"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ncrpf"]
+_data = {
+"flow": SubResource("Animation_vkvpo")
+}
+
+[node name="AOC1" type="Node2D"]
+
+[node name="FileReader" parent="." instance=ExtResource("10_7l68h")]
+file_path = "res://scenes/aoc1/aoc1.txt"
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.05, 0)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Sky"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_n0n6t")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Background"]
+offset_top = -62.0
+offset_right = 1920.0
+offset_bottom = 1018.0
+texture = ExtResource("2_g1vcr")
+metadata/_edit_use_anchors_ = true
+
+[node name="Middle" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Middle"]
+offset_top = -63.0
+offset_right = 1920.0
+offset_bottom = 1017.0
+texture = ExtResource("3_1lhad")
+metadata/_edit_use_anchors_ = true
+
+[node name="Buildings" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 0.8)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Buildings"]
+offset_left = -2.0
+offset_top = 125.0
+offset_right = 1918.0
+offset_bottom = 1205.0
+texture = ExtResource("4_qkvr8")
+metadata/_edit_use_anchors_ = true
+
+[node name="Ground" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1920, 0)
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/Ground"]
+offset_top = 262.0
+offset_right = 1920.0
+offset_bottom = 1342.0
+texture = ExtResource("5_1pyox")
+metadata/_edit_use_anchors_ = true
+
+[node name="minion" parent="." instance=ExtResource("8_jajod")]
+z_index = 1
+position = Vector2(148, 1071)
+speech_time = 3.0
+speed = 50
+
+[node name="Camera2D" type="Camera2D" parent="minion"]
+position = Vector2(-2, -179)
+zoom = Vector2(1.5, 1.5)
+script = ExtResource("1_ypr7k")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="minion/Camera2D"]
+position = Vector2(607, -622)
+amount = 900
+lifetime = 7.5
+randomness = 0.43
+texture = ExtResource("2_wpwse")
+emission_shape = 3
+emission_rect_extents = Vector2(1500, 1)
+spread = 164.6
+gravity = Vector2(0, 30)
+angular_velocity_min = -201.36
+angular_velocity_max = 231.21
+linear_accel_min = -13.56
+linear_accel_max = 10.0
+scale_amount_min = 0.05
+scale_amount_max = 0.2
+color = Color(100, 100, 100, 1)
+color_ramp = SubResource("Gradient_eophn")
+
+[node name="BoxSpawner" parent="." node_paths=PackedStringArray("file_reader") instance=ExtResource("12_rdmer")]
+position = Vector2(2000, 1087)
+file_reader = NodePath("../FileReader")
+distance_between_boxes = 35
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ncrpf")
+}
+autoplay = "flow"
+
+[connection signal="front_number_found" from="BoxSpawner" to="minion" method="_on_box_spawner_front_number_found"]

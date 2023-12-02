@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="IRGB" load_steps=2 format=3 uid="uid://djroupf8yb7gx"]
+
+[ext_resource type="Script" path="res://scenes/aoc2/IRGB.gd" id="1_wuw4i"]
+
+[resource]
+script = ExtResource("1_wuw4i")
