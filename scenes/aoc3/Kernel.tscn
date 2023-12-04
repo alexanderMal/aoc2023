@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://ckxjlriqrdk4g"]
+
+[ext_resource type="Script" path="res://scenes/aoc3/Kernel.gd" id="1_i0sik"]
+[ext_resource type="Texture2D" uid="uid://4lnjtb0kmgrn" path="res://scenes/aoc3/assets/Spritesheet_UI_Flat_Select_01.png" id="2_qfhm2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkwrt"]
+atlas = ExtResource("2_qfhm2")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b338m"]
+atlas = ExtResource("2_qfhm2")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmeqe"]
+atlas = ExtResource("2_qfhm2")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhkrs"]
+atlas = ExtResource("2_qfhm2")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u52ng"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jkwrt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b338m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmeqe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhkrs")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Kernel" type="Node2D"]
+script = ExtResource("1_i0sik")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_u52ng")
+animation = &"idle"
+frame_progress = 0.061346
+offset = Vector2(1, 2)

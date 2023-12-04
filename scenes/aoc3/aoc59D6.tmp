@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://bk7bksupvcog5"]
+
+[ext_resource type="PackedScene" uid="uid://bpjj620kmhfsw" path="res://scenes/util/file_reader.tscn" id="1_5cpa5"]
+[ext_resource type="Script" path="res://scenes/aoc3/aoc3.gd" id="1_ghuip"]
+[ext_resource type="PackedScene" uid="uid://c8i0htyyc42k8" path="res://scenes/aoc3/Importer.tscn" id="2_hh4c1"]
+[ext_resource type="Script" path="res://scenes/aoc3/Importer.gd" id="3_pppwn"]
+
+[node name="Aoc3" type="Node2D"]
+script = ExtResource("1_ghuip")
+
+[node name="FileReader" parent="." instance=ExtResource("1_5cpa5")]
+file_path = "res://scenes/aoc3/example.txt"
+
+[node name="Importer" parent="." node_paths=PackedStringArray("reader") instance=ExtResource("2_hh4c1")]
+script = ExtResource("3_pppwn")
+reader = NodePath("../FileReader")

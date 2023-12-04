@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0h0wk20ndtke"]
+
+[ext_resource type="Script" path="res://scenes/aoc3/Image.gd" id="1_eosg8"]
+
+[node name="Image" type="Node2D"]
+script = ExtResource("1_eosg8")
