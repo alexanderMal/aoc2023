@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="AOC DAY1"
-run/main_scene="res://scenes/aoc4/aoc4.tscn"
+run/main_scene="res://scenes/aoc5/aoc5.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 

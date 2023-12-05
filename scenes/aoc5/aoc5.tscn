@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://vklkjwho42a4"]
+
+[ext_resource type="Script" path="res://scenes/aoc5/aoc5.gd" id="1_fpfwd"]
+[ext_resource type="PackedScene" uid="uid://bpjj620kmhfsw" path="res://scenes/util/file_reader.tscn" id="2_litn4"]
+[ext_resource type="Script" path="res://scenes/aoc5/Importer.gd" id="3_sxt04"]
+
+[node name="Aoc5" type="Node2D"]
+script = ExtResource("1_fpfwd")
+
+[node name="FileReader" parent="." instance=ExtResource("2_litn4")]
+file_path = "res://scenes/aoc5/input.txt"
+
+[node name="Importer" type="Node" parent="." node_paths=PackedStringArray("file_reader")]
+script = ExtResource("3_sxt04")
+file_reader = NodePath("../FileReader")
